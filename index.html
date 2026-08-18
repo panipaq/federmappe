@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stiftedose — Farbschemata für Albrecht Dürer Buntstifte</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+
+    <header class="top">
+        <div>
+            <p class="brand-eyebrow">Stiftedose · Farbtheorie</p>
+            <h1>Farbschemata für deine Buntstifte</h1>
+            <p>Wähle einen Stift aus deiner Dose als Basis. Das Werkzeug berechnet dazu passende Farbschemata und zeigt dir jeweils, welcher deiner echten Stifte der Zielfarbe am nächsten kommt.</p>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="tin">
+            <div class="tin-label-row">
+                <div class="tin-label">Deine Stiftedose</div>
+                <button class="settings-btn" id="settingsBtn" title="Stifte auswählen">⚙︎ Auswahl</button>
+            </div>
+            <div class="tin-count" id="pencilCount"></div>
+            <div class="swatch-grid" id="swatchGrid"></div>
+            <button class="add-pencil-btn" id="addPencilBtn">+ Stift hinzufügen</button>
+
+            <div class="suggestion-box" id="suggestionBox"></div>
+
+            <div class="selected-info" id="selectedInfo"></div>
+            <div id="editArea"></div>
+
+            <p class="tin-note">Alle 120 offiziellen Albrecht-Dürer-Farben sind vorbefüllt. Wähle über „⚙︎ Auswahl" genau die Stifte aus, die du besitzt — nur die werden für die Schemata verwendet. Fehlt dir doch eine Farbe (z. B. eine Sonderedition), kannst du sie unten manuell ergänzen.</p>
+        </aside>
+
+        <main class="stage">
+            <div class="mode-tabs" id="modeTabs">
+                <button class="mode-tab active" data-mode="schemes">Farbschemata</button>
+                <button class="mode-tab" data-mode="family">Familien-Check</button>
+                <button class="mode-tab" data-mode="suggest">Paletten-Ideen</button>
+            </div>
+
+            <div id="schemeSection">
+                <div class="scheme-tabs" id="schemeTabs"></div>
+
+                <div class="scheme-head">
+                    <div>
+                        <h2 id="schemeTitle"></h2>
+                        <p id="schemeDesc"></p>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="wheel-wrap">
+                        <div class="wheel-outer" id="wheelOuter">
+                            <svg class="wheel-svg" id="wheelSvg" viewBox="0 0 320 320"></svg>
+                            <div class="wheel-inner">
+                                <div class="base-label" id="wheelBaseLabel"></div>
+                            </div>
+                        </div>
+                        <div class="wheel-legend">
+                            <span><span class="dot filled"></span> gefundener Stift</span>
+                            <span><span class="dot hollow"></span> theoretischer Zielton</span>
+                            <span><span class="dot dashed"></span> neutraler Ton</span>
+                        </div>
+                        <p class="wheel-caption">Die Position auf dem Ring entspricht dem Farbton (Hue). Schwarz, Weiß und Grau haben streng genommen keinen Farbton — sie werden daher an der jeweiligen Zielposition eingeordnet und gestrichelt dargestellt.</p>
+                    </div>
+
+                    <div>
+                        <div class="results" id="results"></div>
+
+                        <div class="copy-box">
+                            <label>Zum Notieren — Stiftnummern dieses Schemas:</label>
+                            <textarea id="copyText" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="familySection" style="display:none;">
+                <div class="scheme-head">
+                    <div>
+                        <h2>Familien-Check</h2>
+                        <p>Wähle 2–4 Grundfarben (am besten Rot, Gelb, Blau + optional Weiß/Schwarz). Ich zeige dir, welche deiner anderen Stifte sich gedanklich daraus mischen lassen — und welche eher nicht in diese Familie passen.</p>
+                    </div>
+                </div>
+
+                <div class="parent-slots" id="parentSlots"></div>
+                <div class="parent-picker" id="parentPicker" style="display:none;"></div>
+
+                <div class="family-results" id="familyResults"></div>
+            </div>
+
+            <div id="suggestSection" style="display:none;">
+                <div class="scheme-head">
+                    <div>
+                        <h2>Paletten-Ideen</h2>
+                        <p>Wähle 1–2 Ausgangsfarben — ich schlage dir drei fertige Paletten mit unterschiedlichem Charakter daraus vor, jeweils aus deinen echten Stiften zusammengestellt.</p>
+                    </div>
+                </div>
+
+                <div class="parent-slots" id="suggestSlots"></div>
+                <div class="parent-picker" id="suggestPicker" style="display:none;"></div>
+
+                <div class="palette-suggestions" id="paletteSuggestions"></div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="foot">Farbmischung als Annäherung berechnet — Papier, Licht und Stiftdruck verändern den tatsächlichen Farbeindruck.</footer>
+</div>
+
+<div class="overlay-backdrop" id="overlayBackdrop">
+    <div class="overlay-panel">
+        <div class="overlay-head">
+            <h3>Welche Stifte hast du?</h3>
+            <button class="overlay-close" id="overlayClose">✕</button>
+        </div>
+        <p class="overlay-sub">Hake die Farben an, die tatsächlich in deiner Dose liegen. Nur angehakte Stifte werden in der Stiftedose angezeigt und für die Farbschemata verwendet. Fehlt eine Farbe komplett, füge sie unten in der Dose über „+ Stift hinzufügen“ hinzu.</p>
+        <div class="overlay-actions">
+            <button id="selectAll">Alle auswählen</button>
+            <button id="selectNone">Alle abwählen</button>
+        </div>
+        <div class="overlay-grid" id="overlayGrid"></div>
+    </div>
+</div>
+
+<script src="js/color-utils.js"></script>
+<script src="js/palette-data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/schemes.js"></script>
+<script src="js/wheel.js"></script>
+<script src="js/scheme-results.js"></script>
+<script src="js/pencil-case.js"></script>
+<script src="js/next-pencil-suggestion.js"></script>
+<script src="js/family-check.js"></script>
+<script src="js/palette-suggestions.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
