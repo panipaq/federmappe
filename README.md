@@ -1,4 +1,4 @@
-# Federmappe — Farbschemata für Buntstifte
+# Federmappe, erstelle Farbschemata für Buntstifte
 
 Eine kleine Client-seitige Web-App, um aus einem Set an Buntstiften (standardmäßig die 120 Farben von Albrecht Dürer) Farbschemata, Misch-Familien und Paletten-Ideen abzuleiten — inklusive Farbkreis-Visualisierung.
 
