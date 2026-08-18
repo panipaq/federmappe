@@ -3,6 +3,8 @@
 Eine kleine Client-seitige Web-App, um aus einem Set an Buntstiften (standardmäßig die 120 Farben von Albrecht Dürer) Farbschemata, Misch-Familien und Paletten-Ideen abzuleiten — inklusive Farbkreis-Visualisierung.
 
 
+![Vorschau](preview.png)
+
 ## Features
 
 - **Farbschemata**: Komplementär, Analog, Triadisch, Split-Komplementär, Quadratisch, Rechteckig, Monochromatisch und 60/30/10 — jeweils berechnet aus einem gewählten Basis-Stift und auf die eigenen, tatsächlich besessenen Stifte gematcht.
